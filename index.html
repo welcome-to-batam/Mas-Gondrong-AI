@@ -71,31 +71,28 @@
         return;
       }
 
-      // Disable tombol dan tampilkan loading
       sendBtn.disabled = true;
       responseArea.textContent = 'Memproses...';
 
       try {
-        // Simulasi delay dan balasan AI
-        // Ganti bagian ini dengan panggilan API nyata
-        const aiReply = await fakeAIResponse(question);
+        const response = await fetch('http://localhost:3000/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: question }),
+        });
 
-        responseArea.textContent = aiReply;
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+
+        const data = await response.json();
+        responseArea.textContent = data.reply;
       } catch (error) {
         responseArea.textContent = 'Terjadi kesalahan: ' + error.message;
       } finally {
         sendBtn.disabled = false;
       }
     });
-
-    // Fungsi simulasi balasan AI
-    function fakeAIResponse(question) {
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          resolve(`Balasan AI untuk pertanyaan:\n"${question}"\n\nIni adalah contoh balasan yang dihasilkan secara otomatis.`);
-        }, 1500);
-      });
-    }
   </script>
 </body>
 </html>
