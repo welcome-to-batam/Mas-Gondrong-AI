@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Mas-Gondrong-AI</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 20px;
+      background-color: #f9f9f9;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    textarea {
+      width: 100%;
+      font-size: 16px;
+      padding: 10px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      resize: vertical;
+    }
+    button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      background-color: #007bff;
+      color: white;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:disabled {
+      background-color: #aaa;
+      cursor: not-allowed;
+    }
+    #responseArea {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: white;
+      border-radius: 4px;
+      min-height: 120px;
+      white-space: pre-wrap;
+      border: 1px solid #ddd;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <h1>Mas-Gondrong-AI</h1>
+
+  <textarea id="userInput" rows="5" placeholder="Tulis pertanyaanmu di sini..."></textarea>
+  <button id="sendBtn">Kirim</button>
+
+  <div id="responseArea"></div>
+
+  <script>
+    const sendBtn = document.getElementById('sendBtn');
+    const userInput = document.getElementById('userInput');
+    const responseArea = document.getElementById('responseArea');
+
+    sendBtn.addEventListener('click', async () => {
+      const question = userInput.value.trim();
+      if (!question) {
+        alert('Tolong isi pertanyaan terlebih dahulu.');
+        return;
+      }
+
+      // Disable tombol dan tampilkan loading
+      sendBtn.disabled = true;
+      responseArea.textContent = 'Memproses...';
+
+      try {
+        // Simulasi delay dan balasan AI
+        // Ganti bagian ini dengan panggilan API nyata
+        const aiReply = await fakeAIResponse(question);
+
+        responseArea.textContent = aiReply;
+      } catch (error) {
+        responseArea.textContent = 'Terjadi kesalahan: ' + error.message;
+      } finally {
+        sendBtn.disabled = false;
+      }
+    });
+
+    // Fungsi simulasi balasan AI
+    function fakeAIResponse(question) {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve(`Balasan AI untuk pertanyaan:\n"${question}"\n\nIni adalah contoh balasan yang dihasilkan secara otomatis.`);
+        }, 1500);
+      });
+    }
+  </script>
+</body>
+</html>
